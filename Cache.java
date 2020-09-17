@@ -19,6 +19,7 @@ public class Cache<E> {
 	int cnt;
 	int size;
 	int level;
+	int testingCnt;
 
 	/*
 	 * Creates a new Cache of a specified size and level.
@@ -178,6 +179,7 @@ public class Cache<E> {
 			if (curr.getNext().getElement().equals(word)) {
 				hits++;
 				moveToFront();
+				return hits;
 			}
 			if (curr != tail) {
 				curr = curr.getNext();
@@ -261,5 +263,15 @@ public class Cache<E> {
 			curr = curr.getNext();
 		}
 		return retVal;
+	}
+	
+	public int numNodes() {
+		testingCnt = 0;
+		curr = head;
+		while (curr != null) {
+			testingCnt++;
+			curr = curr.getNext();
+		}
+		return testingCnt;
 	}
 }

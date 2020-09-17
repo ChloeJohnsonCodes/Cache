@@ -67,7 +67,7 @@ public class Test {
 					}
 					textInput = new File(args[3]);
 				} catch (NumberFormatException e) {
-					System.err.println(args[1] + " must be an integer");
+					System.err.println(args[1] + " and  " + args[2] + " must be integers");
 					System.exit(1);
 				} catch (IndexOutOfBoundsException e) {
 					System.err.println("Argument not found");
@@ -119,9 +119,8 @@ public class Test {
 						references2++;
 					}
 				}
-				System.out.println(cache1.toString());
-				System.out.println(cache2.toString());
 			}
+			
 			scanner.close();
 		} catch (FileNotFoundException e) {
 			System.err.println("The " + textInput + " file couldn't be found");
