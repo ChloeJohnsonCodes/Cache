@@ -12,17 +12,17 @@ import java.util.Scanner;
 public class Test {
 
 	// control output - modified by command-line args
-	int option;
-	int size1;
-	int size2 = 0;
-	File textInput;
+	private int option;
+	private int size1;
+	private int size2 = 0;
+	private File textInput;
 
 	// global variables
-	int hit1 = 0;
-	int hitData1 = 0;
-	int hitData2 = 0;
-	int references1 = 0;
-	int references2 = 0;
+	private int hit1 = 0;
+	private int hitData1 = 0;
+	private int hitData2 = 0;
+	private int references1 = 0;
+	private int references2 = 0;
 
 	/**
 	 * Executes the main program
@@ -93,10 +93,11 @@ public class Test {
 		try {
 			Cache<String> cache1;
 			Cache<String> cache2 = null;
+			
 			Scanner scanner = new Scanner(textInput);
 			String word;
 			if (option == 1) {
-				cache1 = new Cache<String>(size1, 1);
+				cache1 = new Cache<String>(size1);
 				System.out.println("First level cache with " + size1 + " entries has been created");
 				while (scanner.hasNext()) {
 					word = scanner.next();
@@ -105,27 +106,27 @@ public class Test {
 					references1++;
 				}
 			} else {
-				cache1 = new Cache<String>(size1, 1);
+				cache1 = new Cache<String>(size1);
 				System.out.println("First level cache with " + size1 + " entries has been created");
-				cache2 = new Cache<String>(size2, 2);
+				cache2 = new Cache<String>(size2);
 				System.out.println("Second level cache with " + size2 + " entries has been created");
 				while (scanner.hasNext()) {
 					word = scanner.next();
-					hit1 = cache1.search(word, cache2);
-					hitData1 += hit1;
+					hit1 = cache1.search(word);
 					references1++;
-					if (hit1 == 0) {
-						hitData2 += cache2.search(word, cache1);
+					if (hit1 != 0) {
+						hitData1++;
+						cache2.moveToFront(word);
+					}
+					else {
 						references2++;
+						hitData2 += cache2.search(word);
 					}
 				}
 			}
-			
 			scanner.close();
 		} catch (FileNotFoundException e) {
 			System.err.println("The " + textInput + " file couldn't be found");
-		} catch (NoSuchLevelFoundException e) {
-			System.err.println("This program only accepts level 1 and 2");
 		}
 	}
 
